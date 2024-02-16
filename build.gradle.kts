@@ -63,7 +63,9 @@ repositories {
 
 dependencies {
 	val kotest_version: String by project
+	val scrapeit_version: String by project
 
+	implementation("it.skrape:skrapeit:$scrapeit_version")
 	testImplementation(kotlin("test"))
 	testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
 }
