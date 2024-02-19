@@ -4,7 +4,7 @@ import it.skrape.selects.Doc
 import it.skrape.selects.DocElement
 import it.skrape.selects.ElementNotFoundException
 
-object SearchExtractor {
+class SearchExtractor(private val context: Context) {
 	private fun resolveResultType(text: String): SearchType? {
 		if (text.lowercase().contains("movie")) {
 			return SearchType.MOVIES
@@ -42,7 +42,7 @@ object SearchExtractor {
 
 			SearchResult(
 				title = link.text,
-				url = Context.getFullUrl(link.attribute("href")),
+				url = context.getFullUrl(link.attribute("href")),
 				type = type
 			)
 		} catch (exception: ElementNotFoundException) {

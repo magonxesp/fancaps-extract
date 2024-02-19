@@ -11,7 +11,7 @@ class SearchAgentTest : ShouldSpec({
 			SearchResult(title = "Non Non Biyori Repeat", url = "https://fancaps.net/anime/showimages.php?34699-Non_Non_Biyori_Repeat", type = SearchType.ANIME),
 		)
 
-		val result = SearchAgent.search("Non Non Biyori", listOf(SearchType.ANIME))
+		val result = SearchAgent(DefaultContext).search("Non Non Biyori", listOf(SearchType.ANIME))
 
 		result shouldBeEqual expected
 	}

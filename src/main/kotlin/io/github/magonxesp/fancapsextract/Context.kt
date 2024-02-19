@@ -1,8 +1,8 @@
 package io.github.magonxesp.fancapsextract
 
-object Context {
+abstract class Context {
 	val baseUrl = "https://fancaps.net"
-	var userAgent = "FanCapExtractLib/0.0.0"
+	open val userAgent = "FanCapExtractLib/0.0.0"
 
 	/**
 	 * Get the full url including the protocol and domain.
@@ -15,3 +15,5 @@ object Context {
 		return "$baseUrl/${url.removePrefix("/")}"
 	}
 }
+
+object DefaultContext : Context()

@@ -6,7 +6,7 @@ import it.skrape.fetcher.response
 import it.skrape.fetcher.skrape
 import java.net.URLEncoder
 
-object SearchAgent {
+class SearchAgent(private val context: Context) {
 
 	private fun MutableMap<String, String>.buildQueryString() =
 		entries.joinToString("&") { "${it.key}=${it.value}" }
@@ -24,12 +24,12 @@ object SearchAgent {
 
 		return skrape(HttpFetcher) {
 			request {
-				url = Context.getFullUrl("/search.php?${query.buildQueryString()}")
-				userAgent = Context.userAgent
+				url = context.getFullUrl("/search.php?${query.buildQueryString()}")
+				userAgent = context.userAgent
 			}
 			response {
 				htmlDocument {
-					SearchExtractor.extract(this)
+					SearchExtractor(context).extract(this)
 				}
 			}
 		}

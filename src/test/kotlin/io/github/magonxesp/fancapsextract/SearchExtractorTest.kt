@@ -14,7 +14,7 @@ class SearchExtractorTest : ShouldSpec({
 
 		val html = this::class.java.getResource("/non-non-biyori-search-result.html")!!.readText()
 		val document = htmlDocument(html)
-		val result = SearchExtractor.extract(document)
+		val result = SearchExtractor(DefaultContext).extract(document)
 
 		result shouldBeEqual expected
 	}
