@@ -10,3 +10,10 @@ fun Doc.findSecondOrNull(cssSelector: String): DocElement? =
 	} catch (exception: ElementNotFoundException) {
 		null
 	}
+
+fun Doc.findAllOrEmpty(cssSelector: String) =
+	try {
+		findAll(cssSelector)
+	} catch (exception: ElementNotFoundException) {
+		listOf()
+	}

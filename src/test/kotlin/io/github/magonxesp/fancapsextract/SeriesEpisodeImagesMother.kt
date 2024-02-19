@@ -1,0 +1,50 @@
+package io.github.magonxesp.fancapsextract
+
+object SeriesEpisodeImagesMother {
+	fun existingEpisode() = SeriesEpisodeImages(
+		topImages = listOf(
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123823"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7124363"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7124016"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123748"),
+		),
+		images = listOf(
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123726"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123727"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123728"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123729"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123730"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123731"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123732"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123733"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123734"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123735"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123736"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123737"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123738"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123739"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123740"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123741"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123742"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123743"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123744"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123745"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123746"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123747"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123748"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123749"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123750"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123751"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123752"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123753"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123754"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123755"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123756"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123757"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123758"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123759"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123760"),
+			Picture(url = "https://fancaps.net/anime/picture.php?/7123761"),
+		)
+	)
+}
