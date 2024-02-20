@@ -44,7 +44,6 @@ abstract class Agent(protected val context: Context) {
 				userAgent = context.userAgent
 			}
 			response {
-				val _this = this
 				htmlDocument {
 					extractor.extract(this)
 				}
