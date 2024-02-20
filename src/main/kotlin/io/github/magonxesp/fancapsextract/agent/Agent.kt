@@ -2,8 +2,8 @@ package io.github.magonxesp.fancapsextract.agent
 
 import io.github.magonxesp.fancapsextract.Context
 import io.github.magonxesp.fancapsextract.extractor.Extractor
+import io.github.magonxesp.fancapsextract.fetcher.KtorCIOHttpFetcher
 import it.skrape.core.htmlDocument
-import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
 import it.skrape.fetcher.skrape
 
@@ -38,12 +38,13 @@ abstract class Agent(protected val context: Context) {
 		}
 
 	protected fun <T> extractWithGetRequest(extractor: Extractor<T>, endpoint: String): T {
-		return skrape(HttpFetcher) {
+		return skrape(KtorCIOHttpFetcher) {
 			request {
 				url = context.getFullUrl(endpoint)
 				userAgent = context.userAgent
 			}
 			response {
+				val _this = this
 				htmlDocument {
 					extractor.extract(this)
 				}

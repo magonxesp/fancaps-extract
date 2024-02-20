@@ -64,8 +64,11 @@ repositories {
 dependencies {
 	val kotest_version: String by project
 	val scrapeit_version: String by project
+	val ktor_version: String by project
 
 	implementation("it.skrape:skrapeit:$scrapeit_version")
+	implementation("io.ktor:ktor-client-core:$ktor_version")
+	implementation("io.ktor:ktor-client-cio:$ktor_version")
 	testImplementation(kotlin("test"))
 	testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
 }
