@@ -25,4 +25,16 @@ class RawPictureFinderTest : ShouldSpec({
 
 		result.isNotEmpty() shouldBeEqual true
 	}
+
+	should("findMovieImagesByName should search images by movie name") {
+		val result = finder.findMovieImagesByName("A silent voice").take(10).toList()
+
+		result.isNotEmpty() shouldBeEqual true
+	}
+
+	should("findAllMovieImagesByName should search all images by movie name") {
+		val result = finder.findAllMovieImagesByName("A silent voice").take(10).toList()
+
+		result.isNotEmpty() shouldBeEqual true
+	}
 })
