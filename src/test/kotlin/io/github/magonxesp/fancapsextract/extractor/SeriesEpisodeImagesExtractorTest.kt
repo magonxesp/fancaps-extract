@@ -3,6 +3,7 @@ package io.github.magonxesp.fancapsextract.extractor
 import io.github.magonxesp.fancapsextract.SeriesEpisodeImagesMother
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.equals.shouldBeEqual
+import io.kotest.matchers.shouldBe
 import it.skrape.core.htmlDocument
 
 class SeriesEpisodeImagesExtractorTest : ShouldSpec({
@@ -13,7 +14,7 @@ class SeriesEpisodeImagesExtractorTest : ShouldSpec({
 		val document = htmlDocument(html)
 		val extracted = SeriesEpisodeImagesExtractor().extract(document)
 
-		episodeImages shouldBeEqual extracted
+		episodeImages shouldBe extracted
 	}
 
 })

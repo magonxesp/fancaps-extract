@@ -20,4 +20,13 @@ class SearchAgent(context: Context) : Agent(context) {
 
 		return extractWithGetRequest(SearchExtractor(context), "/search.php?${query.buildQueryString()}")
 	}
+
+	fun searchRawImage(name: String) {
+		val medias = search(name, MediaType.entries)
+		medias.map {
+			if (it.isSeries()) {
+				SeriesImageAgent(context).getEpisodes(it)
+			}
+		}
+	}
 }

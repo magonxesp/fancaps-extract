@@ -5,6 +5,7 @@ import io.github.magonxesp.fancapsextract.exception.MediaNotSupportedException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.equals.shouldBeEqual
+import io.kotest.matchers.shouldBe
 
 class SeriesImageAgentTest : ShouldSpec({
 
@@ -18,7 +19,7 @@ class SeriesImageAgentTest : ShouldSpec({
 		val agent = SeriesImageAgent(DefaultContext)
 
 		shouldThrow<MediaNotSupportedException> {
-			agent.getEpisodesImages(media)
+			agent.getEpisodes(media)
 		}
 	}
 
@@ -31,7 +32,7 @@ class SeriesImageAgentTest : ShouldSpec({
 		val episodes = SeriesEpisodeMother.existingEpisodes()
 
 		val agent = SeriesImageAgent(DefaultContext)
-		val extracted = agent.getEpisodesImages(media)
+		val extracted = agent.getEpisodes(media)
 
 		extracted[0] shouldBeEqual episodes[0]
 		extracted[1] shouldBeEqual episodes[1]
@@ -45,7 +46,7 @@ class SeriesImageAgentTest : ShouldSpec({
 		)
 
 		val agent = SeriesImageAgent(DefaultContext)
-		val extracted = agent.getEpisodesImages(media, Page(40))
+		val extracted = agent.getEpisodes(media, Page(40))
 
 		extracted.isEmpty() shouldBeEqual true
 	}
@@ -56,7 +57,18 @@ class SeriesImageAgentTest : ShouldSpec({
 		val agent = SeriesImageAgent(DefaultContext)
 		val extracted = agent.getEpisodeImages(episode)
 
-		extracted shouldBeEqual episodeImages
+		extracted shouldBe episodeImages
+	}
+
+	should("getEpisodeImages should return null if there is no images") {
+		val episode = SeriesEpisodeMother.existingEpisode()
+		val agent = SeriesImageAgent(DefaultContext)
+
+		// FanCaps always returns the top images when it not found more
+		val extracted = agent.getEpisodeImages(episode, Page(1000))
+
+		extracted?.topImages?.isEmpty() shouldBe false
+		extracted?.images?.isEmpty() shouldBe true
 	}
 
 })
