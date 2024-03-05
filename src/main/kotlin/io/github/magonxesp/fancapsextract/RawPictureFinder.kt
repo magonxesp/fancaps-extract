@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
+/**
+ * The Raw picture finder
+ */
+@Deprecated(message = "This finder might be slow and inefficient")
 class RawPictureFinder(context: Context) {
 	private val searchAgent = SearchAgent(context)
 	private val seriesImagesAgent = SeriesImageAgent(context)
