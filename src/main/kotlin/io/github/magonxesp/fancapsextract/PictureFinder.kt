@@ -23,6 +23,20 @@ class PictureFinder(context: Context) {
 		}
 	}
 
+	suspend fun findFeaturedImagesByName(name: String, strict: Boolean = false): Flow<Picture> = flow {
+		val results = searchAgent.search(name, listOf(MediaType.ANIME, MediaType.TV, MediaType.MOVIES))
+
+		if (strict) {
+			results.map { it.title.compareTo(name) to it }
+				.minByOrNull { it.first }
+				?.second
+				?.preview
+				?.forEach { emit(it) }
+		} else {
+			results.forEach { media -> media.preview.forEach { emit(it) } }
+		}
+	}
+
 	suspend fun findSeriesFirstEpisodeTopImagesByName(name: String): Flow<Picture> = flow {
 		searchAgent.search(name, listOf(MediaType.ANIME, MediaType.TV)).forEach { media ->
 			seriesImagesAgent.getAllEpisodes(media).take(1).collect { episode ->

@@ -43,4 +43,18 @@ class PictureFinderTest : ShouldSpec({
 
 		result.isNotEmpty() shouldBeEqual true
 	}
+
+	should("findFeaturedImagesByName should search all featured images by series name") {
+		val expected = PictureMother.nonNonBiyoriFeaturedPictures()
+		val result = finder.findFeaturedImagesByName("Non non biyori").toList()
+
+		result shouldBeEqual expected
+	}
+
+	should("findFeaturedImagesByName should search all featured images by series name with strict mode") {
+		val expected = PictureMother.nonNonBiyoriFeaturedPicturesStrict()
+		val result = finder.findFeaturedImagesByName("Non non biyori", true).toList()
+
+		result shouldBeEqual expected
+	}
 })

@@ -17,3 +17,10 @@ fun Doc.findAllOrEmpty(cssSelector: String) =
 	} catch (exception: ElementNotFoundException) {
 		listOf()
 	}
+
+fun DocElement.findFirstOrNull(cssSelector: String): DocElement? =
+	try {
+		findFirst(cssSelector)
+	} catch (exception: ElementNotFoundException) {
+		null
+	}

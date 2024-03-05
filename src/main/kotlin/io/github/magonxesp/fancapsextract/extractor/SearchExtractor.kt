@@ -1,76 +1,99 @@
 package io.github.magonxesp.fancapsextract.extractor
 
-import io.github.magonxesp.fancapsextract.Context
-import io.github.magonxesp.fancapsextract.Media
-import io.github.magonxesp.fancapsextract.MediaType
-import io.github.magonxesp.fancapsextract.exception.InvalidMediaUrlException
-import io.github.magonxesp.fancapsextract.findSecondOrNull
+import io.github.magonxesp.fancapsextract.*
 import it.skrape.selects.Doc
 import it.skrape.selects.DocElement
 import it.skrape.selects.ElementNotFoundException
 
 class SearchExtractor(private val context: Context) : Extractor<List<Media>> {
-	private fun resolveResultType(text: String): MediaType? {
-		if (text.lowercase().contains("movie")) {
+	private fun String.resolveMediaTypeByUrl(): MediaType? {
+		if (contains("/movies")) {
 			return MediaType.MOVIES
 		}
 
-		if (text.lowercase().contains("tv")) {
+		if (contains("/tv")) {
 			return MediaType.TV
 		}
 
-		if (text.lowercase().contains("anime")) {
+		if (contains("/anime")) {
 			return MediaType.ANIME
 		}
 
 		return null
 	}
 
-	private fun resultSections(content: DocElement): Map<MediaType, DocElement> {
-		var lastMediaType: MediaType? = null
-		val searchSections: MutableMap<MediaType, DocElement> = mutableMapOf()
-
-		for (child in content.children) {
-			if (child.tagName == "h2") {
-				lastMediaType = resolveResultType(child.text)
-			} else if (lastMediaType != null && child.tagName == "table") {
-				searchSections[lastMediaType] = child
-			}
+	private fun String.resolveRawImageUrl(): String? {
+		if (contains("moviethumbs")) {
+			return "/file/fancaps-movieimages/${getImageIdFromUrl()}.jpg"
 		}
 
-		return searchSections
+		if (contains("tvthumbs")) {
+			return "/file/fancaps-tvimages/${getImageIdFromUrl()}.jpg"
+		}
+
+		if (contains("/animethumbs")) {
+			return "/file/fancaps-animeimages/${getImageIdFromUrl()}.jpg"
+		}
+
+		return null
 	}
 
-	private fun DocElement.buildSearchResult(type: MediaType): Media? =
+	private fun String.resolvePictureUrl(): String? {
+		if (contains("moviethumbs")) {
+			return "/movies/Image.php?imageid=${getImageIdFromUrl()}"
+		}
+
+		if (contains("tvthumbs")) {
+			return "/tv/picture.php?/${getImageIdFromUrl()}"
+		}
+
+		if (contains("/animethumbs")) {
+			return "/anime/picture.php?/${getImageIdFromUrl()}"
+		}
+
+		return null
+	}
+
+	private fun DocElement.extractPreview(): List<Picture> {
+		try {
+			return findAll("a img").mapNotNull {
+				val src = it.attribute("src")
+
+				Picture(
+					url = context.getFullUrl(src.resolvePictureUrl() ?: return@mapNotNull null),
+					rawUrl = src.resolveRawImageUrl()?.let { context.getCdnFullUrl(it) },
+				)
+			}
+		} catch (exception: ElementNotFoundException) {
+			return listOf()
+		}
+	}
+
+	private fun DocElement.buildSearchResult(): Media? {
 		try {
 			val link = findFirst("h4 a")
 			val href = context.getFullUrl(link.attribute("href"))
+			val type = href.resolveMediaTypeByUrl() ?: return null
 
-			Media(
+			return Media(
 				title = link.text,
 				type = type,
-				url = href
+				url = href,
+				preview = extractPreview()
 			)
 		} catch (exception: ElementNotFoundException) {
-			null
+			return null
 		}
-
-	private fun itemsFromSection(section: DocElement, type: MediaType): List<Media> =
-		try {
-			section.findAll(".row > div:first-child").mapNotNull { row -> row.buildSearchResult(type) }
-		} catch (exception: ElementNotFoundException) {
-			listOf()
-		}
+	}
 
 	override fun extract(document: Doc): List<Media> {
-		val results: MutableList<Media> = mutableListOf()
 		val content = document.findSecondOrNull(".single_post_content")
 
 		if (content != null) {
-			val sections = resultSections(content)
-			sections.forEach { results.addAll(itemsFromSection(it.value, it.key)) }
+			val searchResults = content.findAll(".row")
+			return searchResults.mapNotNull { it.buildSearchResult() }
 		}
 
-		return results
+		return listOf()
 	}
 }
