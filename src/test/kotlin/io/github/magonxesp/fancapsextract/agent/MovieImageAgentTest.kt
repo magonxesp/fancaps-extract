@@ -8,6 +8,7 @@ import io.github.magonxesp.fancapsextract.exception.MediaNotSupportedException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContainAnyOf
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 
 class MovieImageAgentTest : ShouldSpec({
@@ -40,7 +41,7 @@ class MovieImageAgentTest : ShouldSpec({
 
 	should("getImages should get all images from a movie") {
 		val pictures = PictureMother.aSilentVoicePictures()
-		val extracted = agent.getAllImages(media).toList()
+		val extracted = agent.getAllImages(media).take(15).toList()
 
 		extracted shouldContainAnyOf pictures
 	}

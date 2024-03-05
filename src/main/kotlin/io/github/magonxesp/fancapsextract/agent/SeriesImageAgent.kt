@@ -17,7 +17,7 @@ class SeriesImageAgent(context: Context) : Agent(context) {
 		val query = media.url.parseQueryString()
 		query["page"] = page.value.toString()
 
-		return extractWithGetRequest(SeriesEpisodeExtractor(), media.url.setQueryStringToUrl(query))
+		return extractWithGetRequest(SeriesEpisodeExtractor(context), media.url.setQueryStringToUrl(query))
 	}
 
 	fun getAllEpisodes(media: Media): Flow<SeriesEpisode> = flow {
@@ -43,7 +43,7 @@ class SeriesImageAgent(context: Context) : Agent(context) {
 		query["page"] = page.value.toString()
 
 		return extractWithGetRequest(
-			extractor = SeriesEpisodeImagesExtractor(),
+			extractor = SeriesEpisodeImagesExtractor(context),
 			endpoint = episode.url.setQueryStringToUrl(query)
 		)
 	}

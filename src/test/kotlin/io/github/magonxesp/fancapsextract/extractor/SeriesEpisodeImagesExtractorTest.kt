@@ -1,5 +1,6 @@
 package io.github.magonxesp.fancapsextract.extractor
 
+import io.github.magonxesp.fancapsextract.DefaultContext
 import io.github.magonxesp.fancapsextract.SeriesEpisodeImagesMother
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.equals.shouldBeEqual
@@ -12,7 +13,7 @@ class SeriesEpisodeImagesExtractorTest : ShouldSpec({
 
 		val html = this::class.java.getResource("/non-non-biyori-episode-images.html")!!.readText()
 		val document = htmlDocument(html)
-		val extracted = SeriesEpisodeImagesExtractor().extract(document)
+		val extracted = SeriesEpisodeImagesExtractor(DefaultContext).extract(document)
 
 		episodeImages shouldBe extracted
 	}
