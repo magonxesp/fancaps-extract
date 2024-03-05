@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0] - 2024-03-05
+
+### Features
+
+- Deprecate RawPictureFinder
+- Optimize raw image url fetching
+
 ## [0.0.0] - 2024-02-20
 
 ### Bug Fixes
