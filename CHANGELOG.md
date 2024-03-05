@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0] - 2024-03-05
+## [0.0.2] - 2024-03-05
+
+### Features
+
+- Get search results featured pictures
+
+## [0.0.1] - 2024-03-05
 
 ### Features
 
@@ -26,5 +32,4 @@
 ### Refactor
 
 - Inject context on class constructor
-
 
