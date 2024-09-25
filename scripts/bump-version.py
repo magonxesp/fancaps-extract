@@ -21,7 +21,7 @@ result.check_returncode()
 if result.stdout is not None:
     context = json.loads(result.stdout.decode('utf-8'))
 
-    if 0 in context and 'version' in context[0].keys():
+    if len(context) > 0 and 'version' in context[0].keys():
         version = re.sub(r'^([0-9.]+\.?[a-z]*\.?[0-9]*)', r'v\1', context[0]['version'])
 
 if version is None:
