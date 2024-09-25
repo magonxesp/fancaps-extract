@@ -61,7 +61,7 @@ replace_version(
 replace_version(
     file_path='README.md',
     search=r'io\.github\.magonxesp:([a-z\-]+):v?[0-9.]+\-?[a-z]*\.?[0-9]*',
-    replacement=r'io\.github\.magonxesp:\1:' + version_code
+    replacement=r'io.github.magonxesp:\1:' + version_code
 )
 
 files = [
