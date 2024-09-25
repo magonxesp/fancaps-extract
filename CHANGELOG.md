@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.5] - 2024-09-25
+
+### Miscellaneous Tasks
+
+- Fix new version available check
+
 ## [0.0.4] - 2024-09-25
 
 ### Miscellaneous Tasks
