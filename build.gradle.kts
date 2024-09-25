@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = "0.0.5"
+version = "0.0.6"
 
 publishing {
 	publications {

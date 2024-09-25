@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.6] - 2024-09-25
+
+### Miscellaneous Tasks
+
+- Fix dependency replacement
+
 ## [0.0.5] - 2024-09-25
 
 ### Miscellaneous Tasks
