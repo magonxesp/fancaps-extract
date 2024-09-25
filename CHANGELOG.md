@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.7] - 2024-09-25
+
+### Bug Fixes
+
+- README.md
+
 ## [0.0.6] - 2024-09-25
 
 ### Miscellaneous Tasks
