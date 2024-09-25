@@ -8,7 +8,7 @@ Add the dependency on your `build.gradle.kts`
 
 ```kotlin
 dependencies {
-    implementation("io\.github\.magonxesp:fancaps-extract:0.0.4")
+    implementation("io.github.magonxesp:fancaps-extract:0.0.4")
 }
 ```
 
