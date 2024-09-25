@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.4] - 2024-09-25
+
+### Miscellaneous Tasks
+
+- Fix replace_version function
+
+## [0.0.3] - 2024-09-25
+
+### Miscellaneous Tasks
+
+- Create bump version script
+- Create bump version script
+
 ## [0.0.2] - 2024-03-05
 
 ### Features
@@ -32,4 +45,5 @@
 ### Refactor
 
 - Inject context on class constructor
+
 
