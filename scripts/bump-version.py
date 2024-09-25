@@ -20,7 +20,9 @@ result.check_returncode()
 
 if result.stdout is not None:
     context = json.loads(result.stdout.decode('utf-8'))
-    version = re.sub(r'^([0-9.]+\.?[a-z]*\.?[0-9]*)', r'v\1', context[0]['version'])
+
+    if 0 in context and 'version' in context[0].keys():
+        version = re.sub(r'^([0-9.]+\.?[a-z]*\.?[0-9]*)', r'v\1', context[0]['version'])
 
 if version is None:
     print('There is not a new version available')
@@ -42,8 +44,10 @@ subprocess.run(['git', 'cliff', '--bump', '-o', 'CHANGELOG.md']).check_returncod
 
 
 def replace_version(file_path, search, replacement):
-    with open(file_path, 'r+w') as f:
-        f.write(re.sub(search, replacement, f.read(), flags=re.MULTILINE))
+    with open(file_path, 'r') as reader:
+        content = reader.read()
+    with open(file_path, 'w') as writer:
+        writer.write(re.sub(search, replacement, content, flags=re.MULTILINE))
 
 
 version_code = re.sub(r'^v', '', version)
