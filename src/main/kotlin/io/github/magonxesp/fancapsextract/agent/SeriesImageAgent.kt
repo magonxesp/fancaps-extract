@@ -4,8 +4,7 @@ import io.github.magonxesp.fancapsextract.*
 import io.github.magonxesp.fancapsextract.exception.MediaNotSupportedException
 import io.github.magonxesp.fancapsextract.extractor.SeriesEpisodeExtractor
 import io.github.magonxesp.fancapsextract.extractor.SeriesEpisodeImagesExtractor
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 
 class SeriesImageAgent(context: Context) : Agent(context) {
 
@@ -65,6 +64,14 @@ class SeriesImageAgent(context: Context) : Agent(context) {
 
 			episodeImages.images.forEach { emit(it) }
 			page.next()
+		}
+	}
+
+	fun getAllEpisodesAllImages(media: Media): Flow<Picture> = flow {
+		getAllEpisodes(media).map { it.images }.collect { pictures ->
+			for (picture in pictures) {
+				emit(picture)
+			}
 		}
 	}
 

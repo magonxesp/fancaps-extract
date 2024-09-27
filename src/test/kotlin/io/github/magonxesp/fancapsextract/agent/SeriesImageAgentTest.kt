@@ -4,8 +4,10 @@ import io.github.magonxesp.fancapsextract.*
 import io.github.magonxesp.fancapsextract.exception.MediaNotSupportedException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.flow.toList
 
 class SeriesImageAgentTest : ShouldSpec({
 
@@ -36,6 +38,7 @@ class SeriesImageAgentTest : ShouldSpec({
 
 		extracted[0] shouldBeEqual episodes[0]
 		extracted[1] shouldBeEqual episodes[1]
+		extracted shouldHaveSize 10
 	}
 
 	should("getEpisodesImages should return empty list if not found results") {
@@ -69,6 +72,19 @@ class SeriesImageAgentTest : ShouldSpec({
 
 		extracted?.topImages?.isEmpty() shouldBe false
 		extracted?.images?.isEmpty() shouldBe true
+	}
+
+	should("getAllEpisodesAllImages should return all images of all episodes") {
+		val media = Media(
+			title = "Non Non Biyori",
+			type = MediaType.ANIME,
+			url = "https://fancaps.net/anime/showimages.php?10434-Non_Non_Biyori"
+		)
+
+		val agent = SeriesImageAgent(DefaultContext)
+		val extracted = agent.getAllEpisodesAllImages(media).toList()
+
+		extracted shouldHaveSize 48
 	}
 
 })
