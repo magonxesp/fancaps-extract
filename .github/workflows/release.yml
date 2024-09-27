@@ -1,0 +1,60 @@
+name: Build release
+permissions:
+  contents: write
+on:
+  push:
+    tags-ignore:
+      - '*-alpha.*'
+      - '*-beta.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@main
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: --latest --no-exec --github-repo ${{ github.repository }}
+        env:
+          OUTPUT: CHANGES.md
+
+      - name: Replace build.gradle versions to current tag
+        run: |
+          export PYTHONPATH="$(pwd)/scripts"
+          python scripts/replace-gradle-version.py ${{ github.ref_name }}
+
+      - name: Build libraries
+        run: ./gradlew build
+
+      - name: Publish to maven central
+        run: ./gradlew publishAndReleaseToMavenCentral
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.GPG_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_KEY_PASSWORD }}
+
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          artifacts: 'build/libs/*.jar'
+          bodyFile: 'CHANGES.md'

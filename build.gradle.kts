@@ -1,36 +1,19 @@
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-	kotlin("jvm") version "1.9.0"
-	kotlin("plugin.serialization") version "1.9.0"
-	`java-library`
-	`maven-publish`
-	signing
-	id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.1.1"
+	kotlin("jvm") version "2.0.20"
+	kotlin("plugin.serialization") version "2.0.20"
+	id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 group = "io.github.magonxesp"
 version = "0.0.7"
 
-publishing {
-	publications {
-		register<MavenPublication>("fancaps-extract") {
-			artifactId = "fancaps-extract"
-			from(components["java"])
-		}
-	}
-}
+mavenPublishing {
+	coordinates(group as String, "fancaps-extract", version as String)
+	publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+	signAllPublications()
 
-signing {
-	sign(publishing.publications["fancaps-extract"])
-}
-
-tasks.javadoc {
-	if (JavaVersion.current().isJava9Compatible) {
-		(options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
-	}
-}
-
-centralPortal {
 	pom {
 		name = "FanCaps extract"
 		description = "Extract search results from the https://fancaps.net/ site"
@@ -74,11 +57,15 @@ dependencies {
 	testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
 }
 
-tasks.test {
+kotlin {
+	java {
+		jvmToolchain(8)
+	}
+}
+
+tasks.withType<Test>().all {
 	useJUnitPlatform()
 }
 
-kotlin {
-	jvmToolchain(8)
-}
+
 

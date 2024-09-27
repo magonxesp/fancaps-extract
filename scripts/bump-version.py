@@ -2,6 +2,7 @@ import argparse
 import subprocess
 import json
 import re
+from functions import replace_version
 
 parser = argparse.ArgumentParser(
     prog='Bump version script',
@@ -41,14 +42,6 @@ print(f'The new version is {version}')
 
 subprocess.run(['git', 'tag', version]).check_returncode()
 subprocess.run(['git', 'cliff', '--bump', '-o', 'CHANGELOG.md']).check_returncode()
-
-
-def replace_version(file_path, search, replacement):
-    with open(file_path, 'r') as reader:
-        content = reader.read()
-    with open(file_path, 'w') as writer:
-        writer.write(re.sub(search, replacement, content, flags=re.MULTILINE))
-
 
 version_code = re.sub(r'^v', '', version)
 
