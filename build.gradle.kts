@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = "0.0.7"
+version = "0.1.0"
 
 mavenPublishing {
 	coordinates(group as String, "fancaps-extract", version as String)

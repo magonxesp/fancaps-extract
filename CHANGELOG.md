@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.0] - 2024-09-27
+
+### Features
+
+- Fetch all featured images of all episodes
+
+### Miscellaneous Tasks
+
+- Add new scripts and create release action
+
 ## [0.0.7] - 2024-09-25
 
 ### Bug Fixes
